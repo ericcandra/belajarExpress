@@ -4,23 +4,45 @@ const port = 3000 // port
 
 app.set('view engine','ejs');
 
+app.get("/prodi",(req, res)=>{
+    const programstudi =[
+        { NamaProdi: "Sistem Informasi", Fakultas: "FIKR", Singkatan: "SI"},
+        { NamaProdi: "Informatika", Fakultas: "FIKR", Singkatan: "IF"},
+        { NamaProdi: "Teknik Elektro", Fakultas: "FIKR", Singkatan: "TE"},
+        { NamaProdi: "Manajemen Informatika", Fakultas: "FIKR",Singkatan: "MI"},
+        { NamaProdi: "Manajemen", Fakultas: "FEB", Singkatan: "MJ"},
+        { NamaProdi: "Akuntasi", Fakultas: "FEB", Singkatan: "AK"}
+    ];
+    res.render('prodi',{title: 'halaman prodi',programstudi});
+});
 
 // route /
 app.get("/home", (req, res)=>{
     // res.sendFile(__dirname + "/home.html");
-    res.render('home',{title: 'halaman home'});
+
+    const berita =[
+        {
+            judul: "berita 1",
+            isi: "isi berita 1"
+        },
+        {
+            judul: "berita 2",
+            isi: "isi berita 2"
+        }
+    ];
+    res.render('home',{title: 'halaman home',berita});
 });
 
 // route /about
 app.get("/about", (req, res)=>{
     // res.sendFile(__dirname + "/about.html");
-    res.render('about');
+    res.render('about',{title: 'halaman about'});
 });
 
 // route /contact
 app.get("/contact", (req, res)=>{
     // res.sendFile(__dirname + "/contact.html");
-    res.render('contact');
+    res.render('contact',{title: 'halaman contact'});
 });
 
 // route /mahasiswa
@@ -51,3 +73,5 @@ app.use("/",(req, res)=>{
 app.listen(port, ()=>{
     console.log(`server dapat diakses di http://localhost:${port}`);
 });
+
+// https://s.id/nurrachmat
