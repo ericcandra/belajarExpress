@@ -2,19 +2,25 @@ const express = require("express")// impor modul express
 const app = express() // inisialisasi express
 const port = 3000 // port
 
+app.set('view engine','ejs');
+
+
 // route /
 app.get("/home", (req, res)=>{
-    res.sendFile(__dirname + "/home.html");
+    // res.sendFile(__dirname + "/home.html");
+    res.render('home',{title: 'halaman home'});
 });
 
 // route /about
 app.get("/about", (req, res)=>{
-    res.sendFile(__dirname + "/about.html");
+    // res.sendFile(__dirname + "/about.html");
+    res.render('about');
 });
 
 // route /contact
 app.get("/contact", (req, res)=>{
-    res.sendFile(__dirname + "/contact.html");
+    // res.sendFile(__dirname + "/contact.html");
+    res.render('contact');
 });
 
 // route /mahasiswa
