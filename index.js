@@ -1,19 +1,26 @@
 const express = require("express")// impor modul express
 const app = express() // inisialisasi express
+const expressLayout = require("express-ejs-layouts");//import modul express-ejs-layouts
 const port = 3000 // port
 
+app.set("views",__dirname + "/views");
 app.set('view engine','ejs');
 
+app.use(expressLayout);
+app.use(express.static('public'));
+
+
+//route /
 app.get("/prodi",(req, res)=>{
     const programstudi =[
-        { NamaProdi: "Sistem Informasi", Fakultas: "FIKR", Singkatan: "SI"},
-        { NamaProdi: "Informatika", Fakultas: "FIKR", Singkatan: "IF"},
-        { NamaProdi: "Teknik Elektro", Fakultas: "FIKR", Singkatan: "TE"},
-        { NamaProdi: "Manajemen Informatika", Fakultas: "FIKR",Singkatan: "MI"},
-        { NamaProdi: "Manajemen", Fakultas: "FEB", Singkatan: "MJ"},
-        { NamaProdi: "Akuntasi", Fakultas: "FEB", Singkatan: "AK"}
+        {NamaProdi: "Sistem Informasi", Fakultas: "FIKR", Singkatan: "SI"},
+        {NamaProdi: "Informatika", Fakultas: "FIKR", Singkatan: "IF"},
+        {NamaProdi: "Teknik Elektro", Fakultas: "FIKR", Singkatan: "TE"},
+        {NamaProdi: "Manajemen Informatika", Fakultas: "FIKR",Singkatan: "MI"},
+        {NamaProdi: "Manajemen", Fakultas: "FEB", Singkatan: "MJ"},
+        {NamaProdi: "Akuntasi", Fakultas: "FEB", Singkatan: "AK"}
     ];
-    res.render('prodi',{title: 'halaman prodi',programstudi});
+    res.render('prodi',{title: 'halaman prodi',programstudi,layout:'main'});
 });
 
 // route /
@@ -30,19 +37,19 @@ app.get("/home", (req, res)=>{
             isi: "isi berita 2"
         }
     ];
-    res.render('home',{title: 'halaman home',berita});
+    res.render('home',{title: 'halaman home',berita, layout:'main'});
 });
 
 // route /about
 app.get("/about", (req, res)=>{
     // res.sendFile(__dirname + "/about.html");
-    res.render('about',{title: 'halaman about'});
+    res.render('about',{title: 'halaman about', layout:'main'});
 });
 
 // route /contact
 app.get("/contact", (req, res)=>{
     // res.sendFile(__dirname + "/contact.html");
-    res.render('contact',{title: 'halaman contact'});
+    res.render('contact',{title: 'halaman contact', layout:'main'});
 });
 
 // route /mahasiswa
