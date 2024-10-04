@@ -31,6 +31,7 @@ app.get("/home", (req, res)=>{
         {
             judul: "berita 1",
             isi: "isi berita 1"
+            
         },
         {
             judul: "berita 2",
