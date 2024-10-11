@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const expressLayout = require('express-ejs-layouts')
+const expressLayout = require("express-ejs-layouts");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
