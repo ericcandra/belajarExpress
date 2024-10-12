@@ -9,99 +9,82 @@
 <body>
     <h1>Contact Us</h1>
     <p>ini halaman Contact</p>
-    <!-- <ul>
-        <li><a href="/home">home</a></li>
-        <li><a href="/about">about us</a></li>
-        <li><a href="/contact">contact us</a></li>
-        <li><a href="/prodi">Prodi</a></li>
-    </ul> -->
+    
     <div class="col-lg-6">
-        <!-- form sign up -->
-        <!-- <h2>membuat akun</h2> -->
-        <!-- <p>Signing up for an account is free and easy. Fill out the form below to get started. JavaScript is required to to continue.        -->
-        <!-- </p> -->
         <form id="contactForm">
             <div class="mb-3">
-                <label for="" class="form-label">Nama</label>
-                <input type="text" class="form-control border border-primary"/>
+                <label for="nama" class="form-label">Nama</label>
+                <input type="text" class="form-control border border-primary" id="nama"/>
             </div>
 
             <div class="mb-3">
-                <label for="" class="form-label">Email</label>
-                <input type="text" class="form-control border border-primary"/>
+                <label for="email" class="form-label">Email</label>
+                <input type="text" class="form-control border border-primary" id="email"/>
             </div>
 
             <div class="mb-3">
-                <label for="" class="form-label">Subject</label>
-                <input type="text" class="form-control border border-primary"/>
+                <label for="subject" class="form-label">Subject</label>
+                <input type="text" class="form-control border border-primary" id="subject"/>
             </div>
 
             <div class="mb-3">
-                <label for="" class="form-label">Message</label>
-                <input type="email" class="form-control border border-primary"/>
+                <label for="message" class="form-label">Message</label>
+                <input type="text" class="form-control border border-primary" id="message"/>
             </div>
 
-            <!-- <div class="mb-3">
-                <label for="" class="form-label">By clicking the "Sign up" button below, I certify that I have read and agree to the TMDB terms of use and privacy policy.</label>
-            </div> -->
-
-            <button class="btn btn-primary">Send Message</button>
-            <button class="btn btn-default text-primary">Cancel</button>
+            <button type="submit" class="btn btn-primary">Send</button>
+            <button type="button" class="btn btn-default text-primary">Cancel</button>
         </form>
     </div>
 
-<h2>Contact List</h2>
-<ul id="contactList"></ul>
+    <h2>Contact List</h2>
+    <ul id="contactList"></ul>
 
-<script>
-    // simpan data ke localhost ketika tombol sumbmit ditekan 
-    document
-        .getElementById("contactForm")
-        .addEventListener("submit", function (e) {
-            e.preventDefault(); // agar form tidak reload halaman setelah submit
+    <script>
+        // Simpan data ke localStorage ketika tombol submit ditekan 
+        document
+            .getElementById("contactForm")
+            .addEventListener("submit", function (e) {
+                e.preventDefault(); // Mencegah form dari reload halaman setelah submit
 
-            //ambil nilai dari input
-            const name = document.getElementById("name").value;
-            const email = document.getElementById("email").value;
-            const subject = document.getElementById("subject").value;
-            const message = document.getElementById("message").value;
+                // Ambil nilai dari input
+                const name = document.getElementById("nama").value;
+                const email = document.getElementById("email").value;
+                const subject = document.getElementById("subject").value;
+                const message = document.getElementById("message").value;
 
-            // ambil daftar kontak lama dari localstorage jika tidak ada data, gunakan aray kosong
-            let contacts = JSON.parse(localStorage.getItem("contact")) || [];
+                // Ambil daftar kontak lama dari localStorage, jika tidak ada data gunakan array kosong
+                let contacts = JSON.parse(localStorage.getItem("contacts")) || [];
 
-            //tambahkan kontak baru ke daftar
-            contacts.push({name,email,subject,message});
-            
-            // simpan kembali daftar kontak ke localstorage
-            localStorage.setItem("contacts", JSON.stringify(contacts));
+                // Tambahkan kontak baru ke daftar
+                contacts.push({ name, email, subject, message });
+                
+                // Simpan kembali daftar kontak ke localStorage
+                localStorage.setItem("contacts", JSON.stringify(contacts));
 
-            // kosongkan form setelah submit
-            document.getElementById("contactForm").reset();
+                // Kosongkan form setelah submit
+                document.getElementById("contactForm").reset();
 
-            //tampilkan daftar kontak yang sudah di updates
-            displayContacts();
-        });
+                // Tampilkan daftar kontak yang sudah di-update
+                displayContacts();
+            });
 
-    // fungsi untuk menampilkan data dari localstorage
-    function displayContacts() {
-        const contactList = document.getElementById("contactList");
-        contactList.innerHTML = ""; // kosongkan list sebelumnya
+        // Fungsi untuk menampilkan data dari localStorage
+        function displayContacts() {
+            const contactList = document.getElementById("contactList");
+            contactList.innerHTML = ""; // Kosongkan list sebelumnya
 
-        // ambil data kontak dari localstorage
-        const contact = JSON.parse(localStorage.getItem("contacts")) || [];
+            // Ambil data kontak dari localStorage
+            const contacts = JSON.parse(localStorage.getItem("contacts")) || [];
 
-        // loop untuk menampilkan setiap kontak
-        contacts.forEach((contact) => {
-            contactList.innerHTML += `<li>Name: ${contact.name}, Email: ${contact.email}, subject: ${contact.subject}, Message: ${contact.message}</li>`;
+            // Loop untuk menampilkan setiap kontak
+            contacts.forEach((contact) => {
+                contactList.innerHTML += `<li>Nama: ${contact.name}, Email: ${contact.email}, Subject: ${contact.subject}, Message: ${contact.message}</li>`;
+            });
+        }
 
-        });
-
-    }
-
-    // panggil fungsi untuk menampilkan kontak saat halaman pertama kali dimuat
-    window.onload = displayContacts;
-</script>
-
-
+        // Panggil fungsi untuk menampilkan kontak saat halaman pertama kali dimuat
+        window.onload = displayContacts;
+    </script>
 </body>
 </html>
