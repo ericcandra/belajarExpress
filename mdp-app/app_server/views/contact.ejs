@@ -67,9 +67,41 @@
             const message = document.getElementById("message").value;
 
             // ambil daftar kontak lama dari localstorage jika tidak ada data, gunakan aray kosong
+            let contacts = JSON.parse(localStorage.getItem("contact")) || [];
+
+            //tambahkan kontak baru ke daftar
+            contacts.push({name,email,subject,message});
+            
+            // simpan kembali daftar kontak ke localstorage
+            localStorage.setItem("contacts", JSON.stringify(contacts));
+
+            // kosongkan form setelah submit
+            document.getElementById("contactForm").reset();
+
+            //tampilkan daftar kontak yang sudah di updates
+            displayContacts();
+        });
+
+    // fungsi untuk menampilkan data dari localstorage
+    function displayContacts() {
+        const contactList = document.getElementById("contactList");
+        contactList.innerHTML = ""; // kosongkan list sebelumnya
+
+        // ambil data kontak dari localstorage
+        const contact = JSON.parse(localStorage.getItem("contacts")) || [];
+
+        // loop untuk menampilkan setiap kontak
+        contacts.forEach((contact) => {
+            contactList.innerHTML += `<li>Name: ${contact.name}, Email: ${contact.email}, subject: ${contact.subject}, Message: ${contact.message}</li>`;
 
         });
+
+    }
+
+    // panggil fungsi untuk menampilkan kontak saat halaman pertama kali dimuat
+    window.onload = displayContacts;
 </script>
+
 
 </body>
 </html>
