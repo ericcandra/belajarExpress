@@ -1,93 +1,97 @@
-const Fakultas = require("../models/fakultas");
+const Prodi = require("../models/prodi");
 
 
-const getAllFakultas = async (req, res) =>{
+const getAllProdi = async (req, res) =>{
     try {
         // mengambil semua fakultas dari database
-        const fakultas = await Fakultas.find();
+        const prodi = await Prodi.find().populate("fakultas_id", "nama singkatan");
         // mengirim respon dengan status 200 dan data fakultas
-        res.status(200).json(fakultas);
+        res.status(200).json(prodi);
     }catch (err) {
         // mengirim respon dengan status 500 jika terjadi kesalahan
         res.status(500).json({ message: err.message });
     }
 };
 
-const getFakultasById = async (req, res) => {
+const getProdiById = async (req, res) => {
     try {
         // mencari fakultas berdasarkan id yang diberikan di parameter
-        const fakultas = await Fakultas.findById(req.params.id);
+        const prodi = await Prodi.findById(req.params.id);
         // jika fakultas tidak ditemukan, kirimkan respon 404
-        if (!fakultas)
-            return res.status(404).json({ message: "Fakultas not found" });
+        if (!prodi)
+            return res.status(404).json({ message: "Prodi not found" });
         // mengirim respon dengan status 200 dan data fakultas
-        res.status(200).json(fakultas);
+        res.status(200).json(prodi);
     }catch (err) {
         // mengirim respon dengan status 500 jika terjadi kesalahan
         res.status(500).json({ message: err.message });
     }
 };
 
-const createFakultas = async (req, res) => {
+const createProdi = async (req, res) => {
     // membuat instance fakultas baru dari data yang diterima
-    const fakultas = new Fakultas({
+    const prodi = new Prodi({
         nama: req.body.nama,
         singkatan: req.body.singkatan,
+        fakultas_id: req.body.fakultas_id,
     });
 
     try {
         // menyimpan fakultas baru ke database
-        const newFakultas = await fakultas.save();
+        const newProdi = await prodi.save();
         // mengirim respon dengan status 201 dan data fakultas baru
-        res.status(201).json(newFakultas);
+        res.status(201).json(newProdi);
     }catch (err) {
         // mengirim respon dengan status 400 jika ada kesalahan saat menyimpan
         res.status(400).json({ message: err.message })
     }
 };
 
-const updateFakultas = async (req, res) => {
+const updateProdi = async (req, res) => {
     try {
         // mencari fakultas berdasarkan id yang diberikan di parameter
-        const fakultas = await Fakultas.findById(req.params.id);
+        const prodi = await Prodi.findById(req.params.id);
         // jika fakultas tidak ditemukan, kirimkan respon 404
-        if (!fakultas)
-            return res.status(404).json({ message: "Fakultas not found" });
+        if (!prodi)
+            return res.status(404).json({ message: "Prodi not found" });
         // memperbarui nama fakultas jika ada di request body
         if (req.body.nama != null) {
-            fakultas.nama = req.body.nama;
+            prodi.nama = req.body.nama;
         }
 
         // memperbarui singkatan fakultas jika ada di rquest body
         if (req.body.singkatan != null) {
-            fakultas.singkatan = req.body.singkatan;
+            prodi.singkatan = req.body.singkatan;
+        }
+        if (res.body.fakultas_id != null){
+            prodi.fakultas_id = res.body.fakultas_id;
         }
 
         // menyimpan perubahan ke database
-        const updateFakultas = await fakultas.save();
+        const updateProdi = await prodi.save();
         // mengirimkan respons dengan status 200 dan data fakultas yang di perbarui
-        res.status(200).json(updateFakultas);
+        res.status(200).json(updateProdi);
     }catch (err) {
         // mengirimkan respon dengan status 400 jika ada kesalahan saat memperbarui
         res.status(400).json({ message: err.message });
     }
 };
 
-const deleteFakultas = async (req, res) => {
+const deleteProdi = async (req, res) => {
     try {
-        const fakultas = await Fakultas.findById(req.params.id);
+        const prodi = await Prodi.findById(req.params.id);
         // jika fakultas tidak ditemukan, kirimkan respon 404
-        if (!fakultas)
-            return res.status(404).json({ message: "Fakultas not found" });
+        if (!prodi)
+            return res.status(404).json({ message: "Prodi not found" });
 
         // menghapus fakultas dari database
-        await fakultas.deleteOne();
+        await prodi.deleteOne();
         // mengirimkan respon dengan status 200 dan pesan penghapusan
-        res.status(200).json({ message: "Fakultas deleted"});
+        res.status(200).json({ message: "Prodi deleted"});
     }catch (err) {
         // mengirimkan respon dengan status 500 jika terjadi kesalahan
         res.status(500).json({ message: err.message });
     }
 };
 
-module.exports = {getAllFakultas,createFakultas,getFakultasById,updateFakultas,deleteFakultas};
+module.exports = {getAllProdi,createProdi,getProdiById,updateProdi,deleteProdi};

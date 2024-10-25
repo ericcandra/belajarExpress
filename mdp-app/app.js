@@ -4,13 +4,14 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const expressLayout = require("express-ejs-layouts");
-// const cors = require("cors");
+const cors = require("cors");
 const connectDB = require("./app_api/models/db");
 
 var indexRouter = require('./app_server/routes/index');
 var usersRouter = require('./app_server/routes/users');
 var prodiRouter = require('./app_server/routes/prodi');
 const fakultasRouter = require("./app_api/routes/fakultas");
+const prodiRouterapi = require("./app_api/routes/prodi");
 
 var app = express();
 
@@ -24,11 +25,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressLayout);
+app.use(cors());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/prodi', prodiRouter);
 app.use("/api/fakultas", fakultasRouter);
+app.use("/api/prodi", prodiRouterapi);
 
 // connect to mongoDB
 connectDB();
