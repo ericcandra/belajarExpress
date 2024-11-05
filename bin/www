@@ -5,7 +5,7 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('belajarexpress:server');
+var debug = require('debug')('mdp-app:server');
 var http = require('http');
 
 /**
@@ -87,4 +87,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+  console.log(`server is running on http://localhost:${port}`);
 }
