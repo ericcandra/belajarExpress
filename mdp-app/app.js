@@ -12,7 +12,7 @@ const fakultasRouter = require("./app_server/routes/fakultas");
 const usersRouter = require('./app_server/routes/users');
 const prodiRouter = require('./app_server/routes/prodi');
 
-const fakultasRouterapi = require("./app_api/routes/fakultas");
+const fakultasRouterApi = require("./app_api/routes/fakultas");
 const prodiRouterapi = require("./app_api/routes/prodi");
 
 var app = express();

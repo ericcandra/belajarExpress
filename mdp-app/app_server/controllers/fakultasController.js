@@ -16,7 +16,7 @@ const index = async (req, res) => {
         });
     }catch (error)  {
         console.error(error.mesage);
-        res.status(500),send("Gagal mendapatkan data fakultas dari api");
+        res.status(500).send("Gagal mendapatkan data fakultas dari api");
     }
 };
 

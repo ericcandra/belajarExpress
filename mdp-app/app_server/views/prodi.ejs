@@ -28,7 +28,6 @@
         <li><a href="/contact">contact us</a></li>
         <li><a href="/prodi">Prodi</a></li>
     </ul> -->
-    <h2>Halaman Prodi</h2>
     <table>
         <thead></thead>
             <tr>
@@ -41,7 +40,7 @@
             <% programstudi.forEach(prodi => { %>
                 <tr>
                     <td><%= prodi.NamaProdi %></td>
-                    <td><%= prodi.Fakultas %></td>
+                    <td><%= prodi.fakultas_id && data.fakultas_id.nama ? data.fakultas_id.nama : 'Belum ada fakultas' %></td>
                     <td><%= prodi.Singkatan %></td>
                 </tr>
             <% }); %>
