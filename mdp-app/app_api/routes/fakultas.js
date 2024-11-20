@@ -5,8 +5,8 @@ const router = express.Router();
 const fakultasController = require("../controllers/fakultasController");
 
 // Mengimpor middleware untuk autentikasi dan pengecekan peran
-const authMiddleware = require("../middleware/authmiddleware");
-const roleMiddleware = require("../middleware/roleMiddleware");
+// const authMiddleware = require("../middleware/authMiddleware");
+// const roleMiddleware = require("../middleware/roleMiddleware");
 
 // Definisi rute untuk fakultas
 // Mengatur rute GET untuk mendapatkan semua data fakultas
