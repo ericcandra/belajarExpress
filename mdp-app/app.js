@@ -15,6 +15,7 @@ const prodiRouter = require('./app_server/routes/prodi');
 const fakultasRouterApi = require("./app_api/routes/fakultas");
 const prodiRouterapi = require("./app_api/routes/prodi");
 const authRouterApi = require("./app_api/routes/auth");
+const mahasiswaRouterApi = require("./app_api/routes/mahasiswa");
 
 require("dotenv").config();
 
@@ -39,6 +40,7 @@ app.use('/prodi', prodiRouter);
 app.use("/api/fakultas", fakultasRouterApi);
 app.use("/api/prodi", prodiRouterapi);
 app.use("/api/auth", authRouterApi);
+app.use("/api/mahasiswa", mahasiswaRouterApi);
 
 // connect to mongoDB
 connectDB();
