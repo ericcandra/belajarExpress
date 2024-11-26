@@ -22,7 +22,7 @@
         <th>Nama</th>
         <!-- Kolom untuk menampilkan nama fakultas -->
         <th>Singkatan</th>
-        <th>Fakultas_id</th>
+        <th>Fakultas</th>
         <!-- Kolom untuk menampilkan nama dekan -->
       </tr>
     </thead>
@@ -32,7 +32,7 @@
         <td>{{ item.nama }}</td>
         <!-- Menampilkan properti `nama` dari setiap objek dalam array -->
         <td>{{ item.singkatan }}</td>
-        <td>{{ item.fakultas_id }}</td>
+        <td>{{ item.fakultas_id.nama }}</td>
         <!-- Menampilkan properti `singkatan` dari setiap objek dalam array -->
       </tr>
     </tbody>
