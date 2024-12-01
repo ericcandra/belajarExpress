@@ -20,31 +20,49 @@
         }
     </style>
 </head>
-<body>
-    <h1>Prodi</h1>
-    <!-- <ul>
-        <li><a href="/home">home</a></li>
-        <li><a href="/about">about us</a></li>
-        <li><a href="/contact">contact us</a></li>
-        <li><a href="/prodi">Prodi</a></li>
-    </ul> -->
-    <table>
-        <thead></thead>
-            <tr>
-                <th>Nama Prodi</th>
-                <th>Fakultas</th>
-                <th>Singkatan</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% programstudi.forEach(prodi => { %>
-                <tr>
-                    <td><%= prodi.NamaProdi %></td>
-                    <td><%= prodi.fakultas_id && data.fakultas_id.nama ? data.fakultas_id.nama : 'Belum ada fakultas' %></td>
-                    <td><%= prodi.Singkatan %></td>
-                </tr>
-            <% }); %>
-        </tbody>
-    </table>
-</body>
-</html>
+<h1>Prodi</h1>
+<form action="/prodi/store" method="POST">
+    <div class="mb-3">
+      <label for="nama" class="form-label">Nama Prodi</label>
+      <input type="text" class="form-control" id="nama" name="nama" required placeholder="nama" />
+    </div>
+    <div class="mb-3">
+      <label for="singkatan" class="form-label">Singkatan</label>
+      <input
+        type="text"
+        class="form-control"
+        id="singkatan"
+        name="singkatan"
+        required
+        placeholder="singkatan"
+      />
+    </div>
+    <div class="mb-3">
+        <label for="fakultas" class="form-label">Fakultas_id</label>
+        <input
+          type="text"
+          class="form-control"
+          id="fakultas_id"
+          name="fakultas_id.nama"
+          required
+          placeholder="masukkan id fakultas"
+        />
+      </div>
+      
+    <button type="submit" class="btn btn-primary">Tambah Prodi</button>
+  </form>
+  
+<table class="table table-striped">
+    <tr>
+        <th>Prodi</th>
+        <th>Singkatan</th>
+        <th>Fakultas_id</th>
+    </tr>
+    <% prodi.forEach(data => {%>
+    <tr>
+        <td><%= data.nama %></td>
+        <td><%= data.singkatan %></td>
+        <td><%= data.fakultas_id && data.fakultas_id.nama ? data.fakultas_id.nama : 'belum ada fakultas' %></td>
+    </tr>
+    <% }) %>
+</table>
