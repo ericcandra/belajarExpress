@@ -96,16 +96,16 @@
                 formControlName="asal_sekolah"
               />
             </div>
-            <div class="mb-3">
+            <!-- <div class="mb-3"> -->
               <!-- Input untuk singkatan prodi -->
-              <label for="file" class="form-label">Foto</label>
+              <!-- <label for="file" class="form-label">Foto</label>
               <input
                 id="file"
                 type="file"
                 class="form-control"
                 formControlName="file"
               />
-            </div>
+            </div> -->
             <div class="mb-3">
               <!-- Dropdown untuk memilih fakultas -->
               <label for="prodi" class="form-label">Prodi</label>
@@ -137,6 +137,93 @@
     </div>
   </div>
 
+  <!-- Modal Edit Mahasiswa -->
+  <div
+    class="modal fade"
+    id="editMahasiswaModal"
+    tabindex="-1"
+    aria-labelledby="editMahasiswaModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editProdiModalLabel">
+            Ubah Program Mahasiswa
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="mahasiswaForm" (ngSubmit)="updateMahasiswa()">
+            <div class="mb-3">
+              <label for="editNpm" class="form-label">Npm</label>
+              <input
+                id="editNpm"
+                type="text"
+                class="form-control"
+                formControlName="npm"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="editNama" class="form-label">Nama</label>
+              <input
+                id="editNama"
+                type="text"
+                class="form-control"
+                formControlName="nama"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="editJenisKelamin" class="form-label">Jenis Kelamin</label>
+              <input
+                id="editJenisKelamin"
+                type="text"
+                class="form-control"
+                formControlName="jenis_kelamin"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="editAsalSekolah" class="form-label">Asal Sekolah</label>
+              <input
+                id="editAsalSekolah"
+                type="text"
+                class="form-control"
+                formControlName="asal_sekolah"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="editProdi" class="form-label">Prodi</label>
+              <select
+                id="editProdi"
+                class="form-select"
+                formControlName="prodi_id"
+              >
+                <option
+                  *ngFor="let prodi of prodi"
+                  [value]="prodi._id"
+                >
+                  {{ prodi.nama }}
+                </option>
+              </select>
+            </div>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="isSubmitting"
+            >
+              {{ isSubmitting ? "Menyimpan..." : "Ubah Mahasiswa" }}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Data Prodi dalam bentuk Card -->
   <div class="row row-cols-1 row-cols-md-3 g-4 mt-4" *ngIf="!isLoading">
     <!-- Grid untuk menampilkan daftar program studi dengan Bootstrap, hanya muncul jika !isLoading. -->
@@ -146,26 +233,27 @@
         <!-- Card Bootstrap dengan shadow dan ketinggian penuh. -->
         <div class="card-body">
           <!-- Isi dari setiap kartu -->
-          <h5 class="card-title">{{ item.npm }}</h5>
+          <h5 class="card-title">
+            <strong>Npm</strong>{{ item.npm }}</h5>
           <!-- Menampilkan nama program studi. -->
           <p class="card-text">
             <strong>Nama:</strong> {{ item.nama }}
             <!-- Menampilkan singkatan program studi. -->
           </p>
           <p class="card-text">
-            <strong>Jenis Kelamin:</strong> {{ item.jenis_kelamin}}
+            <strong>jenis_kelamin:</strong> {{ item.jenis_kelamin}}
             <!-- Menampilkan singkatan program studi. -->
           </p>
           <p class="card-text">
-            <strong>Asal Sekolah:</strong> {{ item.asal_sekolah }}
+            <strong>asal_seekolah:</strong> {{ item.asal_sekolah }}
             <!-- Menampilkan singkatan program studi. -->
           </p>
-          <p class="card-text">
-            <strong>Foto:</strong> {{ item.foto }}
+          <!-- <p class="card-text">
+            <strong>foto:</strong> {{ item.foto }} -->
             <!-- Menampilkan singkatan program studi. -->
-          </p>
+          <!-- </p> -->
           <p class="card-text">
-            <strong>Prodi:</strong> {{ item.prodi_id?.nama }}
+            <strong>prodi:</strong> {{ item.prodi_id?.nama }}
             <!-- Menampilkan nama fakultas, menggunakan safe navigation operator (?.) untuk menghindari error jika data fakultas_id null. -->
           </p>
           <button
@@ -174,6 +262,13 @@
             (click)="deleteMahasiswa(item._id)"
           >
           Hapus
+        </button>
+        <button
+          type="button"
+          class="btn btn-warning mt-3 me-2"
+          (click)="getMahasiswaById(item._id)"
+        >
+          Edit
         </button>
         </div>
       </div>

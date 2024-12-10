@@ -8,10 +8,10 @@ const fs = require("fs");
 exports.createMahasiswa = async (req, res) => {
   const { npm, nama, prodi_id, jenis_kelamin, asal_sekolah } = req.body; // Destrukturisasi data dari body request
 
-  if (!req.file) {
+  // if (!req.file) {
     // Validasi jika file foto tidak ada
-    return res.status(400).json({ message: "File foto is required" });
-  }
+  //   return res.status(400).json({ message: "File foto is required" });
+  // }
 
   try {
     const prodi = await Prodi.findById(prodi_id); // Mencari Prodi berdasarkan ID
@@ -24,7 +24,7 @@ exports.createMahasiswa = async (req, res) => {
       prodi_id,
       jenis_kelamin,
       asal_sekolah,
-      foto: req.file ? req.file.path : null, // Simpan path file jika ada
+      // foto: req.file ? req.file.path : null, // Simpan path file jika ada
     });
 
     await mahasiswa.save(); // Menyimpan data mahasiswa ke database
@@ -68,14 +68,14 @@ exports.updateMahasiswa = async (req, res) => {
     if (!mahasiswa)
       return res.status(404).json({ message: "Mahasiswa not found" }); // Jika mahasiswa tidak ditemukan
 
-    if (req.file) {
-      // Jika ada file foto baru
-      if (mahasiswa.foto) {
-        // Hapus foto lama jika ada
-        fs.unlinkSync(path.join(__dirname, "../", mahasiswa.foto));
-      }
-      mahasiswa.foto = req.file.path; // Simpan path file baru
-    }
+    // if (req.file) {
+    //   // Jika ada file foto baru
+    //   if (mahasiswa.foto) {
+    //     // Hapus foto lama jika ada
+    //     fs.unlinkSync(path.join(__dirname, "../", mahasiswa.foto));
+    //   }
+    //   mahasiswa.foto = req.file.path; // Simpan path file baru
+    // }
 
     // Perbarui field mahasiswa
     mahasiswa.npm = npm ?? mahasiswa.npm;

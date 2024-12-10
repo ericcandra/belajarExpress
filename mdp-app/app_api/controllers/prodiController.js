@@ -48,34 +48,38 @@ const createProdi = async (req, res) => {
 };
 
 const updateProdi = async (req, res) => {
+    const { nama, singkatan, fakultas_id,  } = req.body;
     try {
-        // mencari fakultas berdasarkan id yang diberikan di parameter
-        const prodi = await Prodi.findById(req.params.id);
-        // jika fakultas tidak ditemukan, kirimkan respon 404
+        const prodi = await Prodi.findById(req.params.id); // Mencari mahasiswa berdasarkan ID
         if (!prodi)
-            return res.status(404).json({ message: "Prodi not found" });
-        // memperbarui nama fakultas jika ada di request body
-        if (req.body.nama != null) {
-            prodi.nama = req.body.nama;
-        }
-
-        // memperbarui singkatan fakultas jika ada di rquest body
-        if (req.body.singkatan != null) {
-            prodi.singkatan = req.body.singkatan;
-        }
-        if (res.body.fakultas_id != null){
-            prodi.fakultas_id = res.body.fakultas_id;
-        }
-
-        // menyimpan perubahan ke database
-        const updateProdi = await prodi.save();
-        // mengirimkan respons dengan status 200 dan data fakultas yang di perbarui
-        res.status(200).json(updateProdi);
-    }catch (err) {
-        // mengirimkan respon dengan status 400 jika ada kesalahan saat memperbarui
-        res.status(400).json({ message: err.message });
-    }
-};
+          return res.status(404).json({ message: "prodi not found" }); // Jika mahasiswa tidak ditemukan
+    
+        // if (req.file) {
+        //   // Jika ada file foto baru
+        //   if (mahasiswa.foto) {
+        //     // Hapus foto lama jika ada
+        //     fs.unlinkSync(path.join(__dirname, "../", mahasiswa.foto));
+        //   }
+        //   mahasiswa.foto = req.file.path; // Simpan path file baru
+        // }
+    
+        // Perbarui field mahasiswa
+        prodi.nama = nama ?? prodi.nama;
+        prodi.singkatan = singkatan ?? prodi.singkatan;
+        prodi.fakultas_id = fakultas_id ?? prodi.fakultas_id;
+        // mahasiswa.npm = npm ?? mahasiswa.npm;
+        // mahasiswa.nama = nama ?? mahasiswa.nama;
+        // mahasiswa.prodi_id = prodi_id ?? mahasiswa.prodi_id;
+        // mahasiswa.jenis_kelamin = jenis_kelamin ?? mahasiswa.jenis_kelamin;
+        // mahasiswa.asal_sekolah = asal_sekolah ?? mahasiswa.asal_sekolah;
+    
+        await prodi.save(); // Menyimpan data mahasiswa yang diperbarui ke database
+        res.json(prodi); // Mengembalikan data mahasiswa yang diperbarui
+      } catch (error) {
+        res.status(500).json({ message: error.message }); // Menangani error
+      }
+    };
+    
 
 const deleteProdi = async (req, res) => {
     try {

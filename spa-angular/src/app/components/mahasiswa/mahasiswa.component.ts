@@ -36,7 +36,7 @@ export class MahasiswaComponent implements OnInit {  // Deklarasi komponen denga
       nama: [''],
       jenis_kelamin: [''],
       asal_sekolah: [''],
-      foto: [''],
+      // foto: [''],
       prodi_id: ['null'],
     });
   }
@@ -83,6 +83,60 @@ export class MahasiswaComponent implements OnInit {  // Deklarasi komponen denga
       });
     }
   }
+  editMahasiswaId: string | null = null; // ID prodi yang sedang diubah
+
+  // Method untuk mendapatkan data prodi berdasarkan ID
+  getMahasiswaById(_id: string): void {
+    this.editMahasiswaId = _id; // Menyimpan ID prodi yang dipilih
+    this.http.get(`${this.apiMahasiswaUrl}/${_id}`).subscribe({
+      next: (data: any) => {
+        // Isi form dengan data yang diterima dari API
+        this.mahasiswaForm.patchValue({
+          npm: data.npm,
+          nama: data.nama,
+          jenis_kelamin: data.jenis_kelamin,
+          asal_sekolah: data.asal_sekolah,
+          prodi_id: data.prodi_id,
+        });
+
+        // Buka modal edit
+        const modalElement = document.getElementById('editMahasiswaModal') as HTMLElement;
+        if (modalElement) {
+          const modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+          modalInstance.show();
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching mahasiswa data by ID:', err);
+      },
+    });
+  }
+
+  // Method untuk mengupdate data prodi
+  updateMahasiswa(): void {
+    if (this.mahasiswaForm.valid) {
+      this.isSubmitting = true;
+      this.http.put(`${this.apiMahasiswaUrl}/${this.editMahasiswaId}`, this.mahasiswaForm.value).subscribe({
+        next: (response) => {
+          console.log('Mahasiswa berhasil diperbarui:', response);
+          this.getMahasiswa(); // Refresh data prodi
+          this.isSubmitting = false;
+
+          // Tutup modal edit setelah data berhasil diupdate
+          const modalElement = document.getElementById('editMahasiswaModal') as HTMLElement;
+          if (modalElement) {
+            const modalInstance = bootstrap.Modal.getInstance(modalElement);
+            modalInstance?.hide();
+          }
+        },
+        error: (err) => {
+          console.error('Error updating mahasiswa:', err);
+          this.isSubmitting = false;
+        },
+      });
+    }
+  }
+
   // Method untuk menambahkan fakultas
   addMahasiswa(): void {
     if (this.mahasiswaForm.valid) {
