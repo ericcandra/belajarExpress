@@ -69,8 +69,12 @@ export class ProdiComponent implements OnInit {  // Deklarasi komponen dengan me
   }
   // Method untuk menghapus prodi
 deleteProdi(_id: string): void {
-  if (confirm('Apakah Anda yakin ingin menghapus data ini?')) { // Konfirmasi penghapusan
-    this.http.delete(`${this.apiProdiUrl}/${_id}`).subscribe({
+  if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {// Konfirmasi penghapusan
+
+    const token = localStorage.getItem('authToken'); // ambil token dari localstorage
+    const headers = { Authorization: `Bearer ${token}` }; // tambah bearer token ke header 
+
+    this.http.delete(`${this.apiProdiUrl}/${_id}`, { headers }).subscribe({
       next: () => {
         console.log(`Prodi dengan ID ${_id} berhasil dihapus`);
         this.getProdi(); // Refresh data prodi setelah penghapusan
@@ -113,7 +117,11 @@ editProdiId: string | null = null; // ID prodi yang sedang diubah
   updateProdi(): void {
     if (this.prodiForm.valid) {
       this.isSubmitting = true;
-      this.http.put(`${this.apiProdiUrl}/${this.editProdiId}`, this.prodiForm.value).subscribe({
+
+      const token = localStorage.getItem('authToken'); // ambil token dari localstorage
+      const headers = { Authorization: `Bearer ${token}` }; // tambah bearer token ke header
+
+      this.http.put(`${this.apiProdiUrl}/${this.editProdiId}`, this.prodiForm.value, { headers }).subscribe({
         next: (response) => {
           console.log('Prodi berhasil diperbarui:', response);
           this.getProdi(); // Refresh data prodi
@@ -138,7 +146,11 @@ editProdiId: string | null = null; // ID prodi yang sedang diubah
   addProdi(): void {
     if (this.prodiForm.valid) {
       this.isSubmitting = true;  // Set status submitting
-      this.http.post(this.apiProdiUrl, this.prodiForm.value).subscribe({
+
+      const token = localStorage.getItem('authToken'); // ambil token dari localstorage
+      const headers = { Authorization: `Bearer ${token}` }; // tambah bearer token ke header
+
+      this.http.post(this.apiProdiUrl, this.prodiForm.value, { headers }).subscribe({
         next: (response) => {
           console.log('Data berhasil ditambahkan:', response);
           this.getProdi();  // Refresh data fakultas

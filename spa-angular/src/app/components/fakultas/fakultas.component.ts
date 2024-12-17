@@ -56,7 +56,11 @@ export class FakultasComponent implements OnInit {  // Deklarasi komponen dengan
   }
   deleteFakultas(_id: string): void {
     if (confirm('Apakah Anda yakin ingin menghapus data ini?')) { // Konfirmasi penghapusan
-      this.http.delete(`${this.apiUrl}/${_id}`).subscribe({
+
+      const token = localStorage.getItem('authToken'); // ambil token dari localstorage
+      const headers = { Authorization: `Bearer ${token}` }; // tambah bearer token ke header
+
+      this.http.delete(`${this.apiUrl}/${_id}`, { headers }).subscribe({
         next: () => {
           console.log(`Fakultas dengan id ${_id} berhasil dihapus`);
           this.getFakultas(); // Refresh data prodi setelah penghapusan
@@ -73,6 +77,7 @@ export class FakultasComponent implements OnInit {  // Deklarasi komponen dengan
   // Method untuk mendapatkan data prodi berdasarkan ID
   getFakultasById(_id: string): void {
     this.editFakultasId = _id; // Menyimpan ID prodi yang dipilih
+    
     this.http.get(`${this.apiUrl}/${_id}`).subscribe({
       next: (data: any) => {
         // Isi form dengan data yang diterima dari API
@@ -97,7 +102,11 @@ export class FakultasComponent implements OnInit {  // Deklarasi komponen dengan
   updateFakultas(): void {
     if (this.fakultasForm.valid) {
       this.isSubmitting = true;
-      this.http.put(`${this.apiUrl}/${this.editFakultasId}`, this.fakultasForm.value).subscribe({
+
+      const token = localStorage.getItem('authToken'); // ambil token dari localstorage
+      const headers = { Authorization: `Bearer ${token}` }; // tambah bearer token ke header
+
+      this.http.put(`${this.apiUrl}/${this.editFakultasId}`, this.fakultasForm.value, { headers }).subscribe({
         next: (response) => {
           console.log('Fakultas berhasil diperbarui:', response);
           this.getFakultas(); // Refresh data prodi
@@ -121,7 +130,11 @@ export class FakultasComponent implements OnInit {  // Deklarasi komponen dengan
   addFakultas(): void {
     if (this.fakultasForm.valid) {
       this.isSubmitting = true;  // Set status submitting
-      this.http.post(this.apiUrl, this.fakultasForm.value).subscribe({
+
+      const token = localStorage.getItem('authToken'); // ambil token dari localstorage
+      const headers = { Authorization: `Bearer ${token}` }; // tambah bearer token ke header
+
+      this.http.post(this.apiUrl, this.fakultasForm.value, { headers }).subscribe({
         next: (response) => {
           console.log('Data berhasil ditambahkan:', response);
           this.getFakultas();  // Refresh data fakultas

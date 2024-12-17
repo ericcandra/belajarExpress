@@ -9,13 +9,13 @@ const roleMiddleware = require("../middleware/roleMiddleware");
 
 router.get("/", prodiController.getAllProdi);
 // Mengatur rute POST untuk membuat data fakultas baru
-router.post("/", prodiController.createProdi);
+router.post("/", authMiddleware, roleMiddleware ("admin"), prodiController.createProdi);
 // Mengatur rute GET untuk mendapatkan data fakultas berdasarkan ID
 router.get("/:id", prodiController.getProdiById);
 // Mengatur rute PUT untuk memperbarui data fakultas berdasarkan ID
-router.put("/:id", prodiController.updateProdi);
+router.put("/:id", authMiddleware, roleMiddleware("admin"), prodiController.updateProdi);
 // Mengatur rute DELETE untuk menghapus data fakultas berdasarkan ID
-router.delete("/:id", prodiController.deleteProdi);
+router.delete("/:id", authMiddleware, roleMiddleware("admin"), prodiController.deleteProdi);
 
 // router.get("/", prodiController.getAllProdi);
 
